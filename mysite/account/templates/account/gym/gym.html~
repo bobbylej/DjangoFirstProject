@@ -1,0 +1,34 @@
+{% extends "polls/glowna.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/gym.css"/>
+
+<div class="gym">
+	<h1>{{ object.city }} {{ object.street }} {{ object.no_building }}{% if object.no_local %}/{{ object.no_local }}{% endif %}</h1>
+	<a href="{% url 'gym_activities' object.pk %}"><h3>Kalendarz zajęć</h3></a>
+	<div class="photos">
+		{% for photo in object.photos.all %}
+			<img src="{{ photo }}"/>
+		{% endfor %}
+	</div>
+	<div class="equipments">
+		<h2>Sprzęt w siłowni</h2>
+		{% for equipment in object.equipments.all %}
+			<div class="equipment">
+				<h3>{{ equipment.name }}</h3>
+				<p>{{ equipment.desc }}</p>
+				<div class="equip-photos">
+				{% for photo in equipment.photos.all %}
+					<img src="{{ photo }}"/></div>
+				{% endfor %}
+				</div>
+			</div>
+		{% empty %}
+			<div class="empty">
+				<p>Brak sprzętu w siłowni</p>
+			</div>
+		{% endfor %}
+	</div> 
+
+</div>
+
+{% endblock %}

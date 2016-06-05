@@ -1,0 +1,31 @@
+div.gym {
+	*border: 1px solid #202020;
+	*background-color: #FFFCCB;
+	text-align: right;
+}
+
+div.gym:nth-child(2n) {
+	*border: 1px solid #202020;
+	*background-color: #FFFFFF;
+	text-align: left;
+}
+
+div.gym a {
+	text-decoration: none;
+	padding: 5px;
+	font-size: 20px;
+	color: #ffffff;
+	background: #202020;
+	border-radius: 4px;
+}
+
+div.gym a:focus {
+	text-decoration: none;
+}
+
+div.photos img {
+	display: block-inline;
+	width: 400px;
+}
+
+

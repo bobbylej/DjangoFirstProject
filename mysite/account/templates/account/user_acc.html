@@ -1,0 +1,7 @@
+{% extends "polls/glowna.html" %}
+{% block content %}
+<div class="user_panel">
+<h1>Witaj {{ username }}!</h1>
+<a href="{% url 'polls:login_user' %}">Strona logowania</a>
+</div>
+{% endblock %}

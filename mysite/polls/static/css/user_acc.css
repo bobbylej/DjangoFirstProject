@@ -1,0 +1,35 @@
+nav.user_panels_list {
+	height: auto;
+	width: 400px;
+	background-color: #202020;
+	border: 0;
+	border-radius: 4px;
+	text-align: center;
+	float: left;
+}
+
+nav.user_panels_list ul {
+	list-style: none;
+	display: inline;
+	margin: 0;
+}
+
+nav.user_panels_list ul li {
+	display: inline;
+	border: 1;
+	border-right: 3px solid #fff;
+	padding: 5px;
+}
+
+nav.user_panels_list ul li:last-child {
+	border-right: 0;
+}
+
+nav.user_panels_list ul li a {
+	text-decoration: none;
+	color: #fff;
+}
+
+td.voucher_name {
+	text-transform: uppercase;
+}

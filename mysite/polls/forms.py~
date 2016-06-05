@@ -1,0 +1,11 @@
+from django import forms            
+from django.contrib.auth.models import User   # fill in custom user info then save it 
+from django.contrib.auth.forms import UserCreationForm
+from polls.models import *    
+
+class RegisterForm(forms.ModelForm):
+    class Meta:
+        model = CustomUser
+        fields = ('email','password','first_name','last_name','groups','gender','phone','city','zip_code','street','no_building','no_local',)
+
+

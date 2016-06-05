@@ -1,0 +1,148 @@
+tag#every_day {
+	background-color: #202020;
+	border-radius: 4px;
+	*padding: 5px;
+	color: #ffffff;
+	font-weight: bold;
+}
+
+div.calendar_div {
+	margin: 20px 0;
+}
+
+a.calendar {
+	padding: 5px;
+	padding-right: 30px;
+	background-color: #202020;
+	border-radius: 4px;
+	color: #ffffff;
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: none;
+	background-image:url('/static/img/calendar.png');
+	background-position: 98% center;
+    background-repeat:no-repeat;
+    background-size: 22px 22px;
+}
+
+div.day {
+	width: 100%;
+	*border-bottom: 1px solid #202020;
+	background-color: #FFFCCB;
+	padding: 10px;
+	display: inline-block;
+}
+
+div.day:nth-child(2n) {
+	width: 100%;
+	*border-bottom: 1px solid #202020;
+	background-color: #FFFFFF;
+	padding: 10px;
+	display: inline-block;
+}
+
+div.day div.activity {
+	display: inline-block;
+	width: 20%;
+	font-size: 11px;
+	vertical-align: top;
+}
+
+div.day div.activity p {
+	margin: 5px;
+}
+
+div.photos_div {
+	position: relative;
+	height: 270px;
+	width: 100%;
+}
+
+ul.photos {
+	height: 270px;
+	display: inline-block;
+	*overflow: auto;
+	*overflow-y: hidden;
+	white-space: nowrap;
+	margin: 0;
+}
+
+ul.photos li {
+	display: inline;
+}
+
+div.photos_div #next_img {
+	position: absolute;
+	background: url('/static/img/next.png') no-repeat;
+	background-size:  contain;
+	border: 0;
+	width: 50px;
+	height: 50px;
+	top: 110px;
+	right: 2%;
+}
+
+div.photos_div #prev_img {
+	position: absolute;
+	background: url('/static/img/prev.png') no-repeat;
+	background-size:  contain;
+	border: 0;
+	width: 50px;
+	height: 50px;
+	top: 110px;
+	left: 2%;
+}
+
+ul.photos li img {
+	height: 270px;
+	width: 400px;
+	display: inline-block;
+}
+
+div.equipments {
+	margin-top: 10px;
+}
+
+div.equipments div.equip {
+	display: block;
+}
+
+div.equipments div.equip * {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+div.equipments div.equip h3.equip-name {
+	width: 20%;
+	text-align: center;
+	margin: 0 2%;
+}
+
+div.equipments div.equip p.equip-desc {
+	width: 50%;
+	max-width: 50%;
+}
+
+div.equipments div.equip-left p.equip-desc {
+	text-align: left;
+}
+
+div.equipments div.equip-right p.equip-desc {
+	text-align: right;
+}
+
+div.equipments div.equip div.equip-img {
+	width: 25%;
+}
+
+div.equipments div.equip-left div.equip-img {
+	text-align: right;
+}
+
+div.equipments div.equip-right div.equip-img {
+	text-align: left;
+}
+
+div.equipments div.equip img {
+	width: 200px;
+}

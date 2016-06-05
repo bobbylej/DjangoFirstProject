@@ -1,0 +1,71 @@
+{% extends "polls/glowna.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/gym.css"/>
+<link rel="stylesheet" type="text/css" href="/static/css/gym_activities.css"/>
+
+<div class="gym_activities">
+	<h1>Zajęcia na siłowni</h1>
+	{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+	
+	{% regroup activities by start|date:"d-m-Y" as activ_list %}
+	
+	{% for group in user.groups.all %}
+		{% if group.name == 'employees' %}
+		<form action="#" method="post">
+		{% csrf_token %}
+			<input type="submit" name="google" value="Synchronizuj"/>
+		</form>
+		{% endif %}
+	{% endfor %}
+	
+	{% for activs in activ_list %}
+		<div class="day">
+			<h2>{% if forloop.counter == 1 %}Dzisiaj{% elif forloop.counter == 2 %}Jutro{% else %}{{ activs.grouper }}{% endif %}</h2>
+		{% for act in activs.list %}
+			<div class="activity">
+				<p>{{ act.activity }} ({{ act.clients.count }}/{% if act.max_people %}{{ act.max_people }}{% else %}-{% endif %})</p> 
+				<p>Instruktor: {{ act.instructor.first_name }} {{ act.instructor.last_name }}</p>
+				<p>{{ act.start|date:"H:i" }} - {{ act.end|date:"H:i" }}</p>
+		    		{% if user.is_authenticated and not user in act.clients.all and has_carnet %}
+				<form action="#" method="post">
+				{% csrf_token %}
+				<input type="text" name="actId" value="{{ act.id }}" hidden/>
+				<input type="submit" name="act{{ act.id }}" value="Zapisz się"/>
+				</form>
+				{% endif %}
+				{% if user.is_authenticated and user in act.clients.all %}
+				<p><i>Jesteś zapisany</i></p>
+				{% load extras %}
+				<div class="google_calendar_div"><a class="google_calendar" href="{{ act|google_calendarize }}">+</a></div>
+				{% endif %}
+			</div>
+		{% empty %}
+			<p>Brak zajęć w tym dniu</p>
+		{% endfor %}
+		</div>
+	{% empty %}
+		<div class="day">
+			<h2>{{ activs.grouper }}</h2>
+			<p>Brak zajęć w ciągu 7 dni</p>
+		</div>
+	{% endfor %}
+
+	<iframe src="https://www.google.com/calendar/embed?showTitle=0&amp;showCalendars=0&amp;mode=WEEK&amp;height=600&amp;wkst=1&amp;bgcolor=%23ffffff&amp;src=silowniamuscles.webowe%40gmail.com&amp;color=%231B887A&amp;ctz=Europe%2FWarsaw" style=" border-width:0 " width="900" height="600" frameborder="0" scrolling="no"></iframe>
+</div>
+
+<script>
+	$('a.google_calendar').hover(
+		function(){
+			$(this).text('Dodaj do Google Drive');
+			$(this).css('font-size', '12px');
+			//$(this).css('padding', '20px 0 10px 45px');
+			//$(this).css('padding-left', '45px');
+		},function(){
+			$(this).text('+');
+			$(this).css('font-size', '25px');
+			//$(this).css('padding', '10px 0 10px 45px');
+			//$(this).css('padding-left', '45px');
+		}
+	);
+</script>
+{% endblock %}

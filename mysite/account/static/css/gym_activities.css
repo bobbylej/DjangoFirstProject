@@ -1,0 +1,23 @@
+div.activity div.google_calendar_div {
+	height: 40px;
+}
+
+div.activity a.google_calendar {
+	width: 40px;
+	padding: 10px 0;
+	padding-left: 45px;
+	background: url('/static/img/google_calendar.png') no-repeat left center;
+	background-size: 40px 40px;
+	color: #457DDB;
+	font-size: 25px;
+	text-decoration: none;
+}
+
+div.activity input[type="submit"] {
+	color: #ffffff;
+	font-weight: bold;
+	background-color: #202020;
+	border: 0;
+	border-radius: 4px;
+	padding: 5px;
+}

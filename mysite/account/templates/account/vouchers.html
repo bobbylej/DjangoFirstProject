@@ -1,0 +1,66 @@
+{% extends "polls/glowna.html" %}
+{% block content %}
+
+  <link rel="stylesheet" type="text/css" href="/static/css/vouchers.css" />
+  
+<div class="vouchers">
+<h1>Karnety</h1>
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+{% if vouchers %}
+    <table class="vouchers_table">
+	<thead>
+		<td></td>
+		<td></td>
+	{% for addition in additions %}
+		<td id="addit_{{ addition.id }}">{{ addition.name }}</td>
+	{% endfor %}
+	</thead>
+    {% for voucher in vouchers %}
+        <tr id="tr_{{ forloop.counter }}">
+		<td>
+			{% if user.is_authenticated %}
+			<form action="{% url 'add_voucher' %}" method="post">
+			{% csrf_token %}
+				<input type="text" name="voucher_name" value="{{ voucher.name }}" hidden />
+				<input class="buy_voucher" type="submit" name="buy" value="Kup" />
+			</form>
+			{% endif %}
+		</td>
+		<td>
+			<table>
+				<tr>
+					<td class="voucher_name"><p>{{ voucher.name }}</p></td>
+					<td class="voucher_price"><p>{{ voucher.price }}zł</p></td>
+				</tr>
+				<tr>
+					<td colspan = "2"><p>{{ voucher.desc }}</p></td>
+				</tr>
+			</table>
+		</td>
+		{% for addition in additions %}
+		<td class="addit"><img src="/static/img/not.png"/></td>
+		{% endfor %}
+	</tr>
+    {% endfor %}
+    </table>
+
+{% for voucher in vouchers %}
+	{% with forloop.counter as index %} 
+	{% for vadd in voucher.additions.all %}
+		<script>
+			$(document).ready(function() {
+				var index = $('table.vouchers_table thead td#addit_{{ vadd.id }}').index() + 1;
+				//console.log(index + " " + {{ vadd.id }} + " " + texty);
+				$('table.vouchers_table tbody tr#tr_{{ index }} td:nth-child(' + index + ')').html('<img src="/static/img/ok.png"/>');
+			});
+		</script>
+	{% endfor %}
+	{% endwith %}
+{% endfor %}
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+
+</div>
+
+{% endblock %}

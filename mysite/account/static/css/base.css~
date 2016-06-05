@@ -1,0 +1,100 @@
+
+    html {
+        width: 100%;
+        font-family: Arial;
+    }
+
+    body {
+        width: 100%;
+        margin: 0;
+    }
+
+    div.header {
+        width: 100%;
+        height: auto;
+        background-color: #ffffff;
+        text-align: center;
+        margin-top: 10px
+    }
+
+    div.header div.header_subheader {
+        display: block;
+        position: relative;
+        width: 900px;
+        height: 100px;
+        margin: auto;
+    }
+
+    div.header div.header_logo {
+        display: inline-block;
+        position: absolute;
+        width: auto;
+        left: 0;
+        bottom: 0;
+    }
+
+    div.header div.header_login_panel {
+        display: inline-block;
+        position: absolute;
+        width: auto;
+        right: 0;
+        bottom: 0;
+    }
+
+    div.header div.header_links {
+        display: block;
+        position: relative;
+        width: 100%;
+        background-color: #7f7c8d;
+    }
+
+    div.header div.header_links ul{
+        list-style-type: none;
+        width: 900px;
+        margin: auto;
+        text-align: left;
+        padding: 10px 0;
+    }
+
+    div.header div.header_links ul li{
+	display: inline;
+        width: auto;
+        height: 100%;
+	margin-right: 10px;
+        padding: 10px 0;
+    }
+
+    div.header div.header_links ul li a{
+        text-transform: uppercase;
+        text-decoration: none;
+        color: #fff;
+        padding: 10px 0;
+    }
+
+    div.header div.header_links ul li:hover{
+        background-color: #f5d76e;
+    }
+
+    div.header div.header_links ul li:hover a{
+        color: #202020;
+    }
+
+    div.content {
+        display: block;
+        position: relative;
+        padding: 20px;
+        background-color: #fff;
+        margin: 0;
+    }
+	
+	div.content > div {
+		max-width:900px;
+		margin: auto;
+		padding: 0;
+	}
+
+	div.content table td {
+		text-align: left;
+		vertical-align: center;
+	}
+

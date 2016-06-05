@@ -1,0 +1,7 @@
+{% extends "polls/base.html" %}
+{% block content %}
+
+<h1>Witaj {{ username }}!</h1>
+<a href="{% url 'polls:login_user' %}">Strona logowania</a>
+
+{% endblock %}

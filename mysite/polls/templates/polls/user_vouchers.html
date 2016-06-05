@@ -1,0 +1,14 @@
+{% extends "polls/user_acc.html" %}
+{% block content_user %}
+
+	<h1>Twoje karnety</h1>
+	<table class="vouchers">
+		{% for voucher in vouchers %}
+		<tr>
+			<td class="voucher_name">{{ voucher.voucher }}</td> 
+			<td class="voucher_date">{{ voucher.date_order|date:"d.m.Y" }} - {{ voucher.date_end|date:"d.m.Y" }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock %}

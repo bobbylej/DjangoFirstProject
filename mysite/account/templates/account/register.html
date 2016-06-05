@@ -1,0 +1,12 @@
+{% extends "polls/glowna.html" %}
+{% block content %}
+<div class="register_panel">
+  <h1>Rejestracja</h1>
+
+  <form action="" method="post">
+	{% csrf_token %}
+      	{{ form.as_p }}
+      	<input type="submit" value="Stwórz">
+  </form>
+</div>
+{% endblock %}

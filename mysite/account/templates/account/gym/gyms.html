@@ -1,0 +1,25 @@
+{% extends "polls/glowna.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/gyms.css"/>
+
+<div class="gyms">
+	<h1>Siłownie</h1>
+	{% for gym in objects %}
+		<div class="gym">
+			<a href="{% url 'gym' gym.pk %}">{{ gym.city }} {{ gym.street }} {{ gym.no_building }}{% if gym.no_local %}/{{ gym.no_local }}{% endif %}</a>
+			<div class="photos">
+			{% with gym.photos.all|first as photo %}
+				<img src="{{ photo }}"/>
+			{% endwith %}
+			</div>
+			
+		</div>
+	{% empty %}
+		<div class="empty">
+			<p>Brak siłowni</p>
+		</div>
+	{% endfor %}
+
+</div>
+
+{% endblock %}

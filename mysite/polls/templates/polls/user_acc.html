@@ -1,0 +1,20 @@
+{% extends "polls/glowna.html" %}
+{% block content %}
+
+<link rel="stylesheet" type="text/css" href="/static/css/user_acc.css"/>
+
+<div class="user_panel">
+	<h1>Witaj {{ user.username }}!</h1>
+	<nav class="user_panels_list">
+		<ul>
+			<li><a href="{% url 'update_profile' %}">Moje dane</a></li>
+			<li><a href="{% url 'change_password' %}">Zmiana hasła</a></li>
+			<li><a href="{% url 'user_vouchers' %}">Historia karnetów</a></li>
+		</ul>
+	</nav>
+	<br></br>
+	{% block content_user %}
+	
+	{% endblock %}
+</div>
+{% endblock %}

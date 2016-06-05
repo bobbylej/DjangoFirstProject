@@ -1,0 +1,52 @@
+div.gym {
+	border: 1px solid #202020;
+}
+
+div.photos img {
+	display: block-inline;
+	width: 400px;
+}
+
+div.equipments div.equip {
+	display: block;
+}
+
+div.equipments div.equip * {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+div.equipments div.equip h3.equip-name {
+	width: 20%;
+	text-align: center;
+	margin: 0 2%;
+}
+
+div.equipments div.equip p.equip-desc {
+	width: 50%;
+	max-width: 50%;
+}
+
+div.equipments div.equip-left p.equip-desc {
+	text-align: left;
+}
+
+div.equipments div.equip-right p.equip-desc {
+	text-align: right;
+}
+
+div.equipments div.equip div.equip-img {
+	width: 25%;
+}
+
+div.equipments div.equip-left div.equip-img {
+	text-align: right;
+}
+
+div.equipments div.equip-right div.equip-img {
+	text-align: left;
+}
+
+div.equipments div.equip img {
+	width: 200px;
+}

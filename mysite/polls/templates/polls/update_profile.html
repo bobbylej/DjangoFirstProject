@@ -1,0 +1,12 @@
+{% extends "polls/user_acc.html" %}
+{% block content_user %}
+<div class="register_panel">
+  <h1>Edycja danych</h1>
+
+  <form action="" method="post">
+	{% csrf_token %}
+      	{{ form.as_p }}
+      	<input type="submit" value="Zapisz">
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends "polls/glowna.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/gym.css"/>
+
+<div class="gym_activities">
+	<h1>Zajęcia na siłowni</h1>
+	{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+	
+	{% regroup activities by start|date:"d-m-Y" as activ_list %}
+	
+	
+	{% for activs in activ_list %}
+		<div class="day">
+			<h2>{% if forloop.counter == 1 %}Dzisiaj{% elif forloop.counter == 2 %}Jutro{% else %}{{ activs.grouper }}{% endif %}</h2>
+		{% for act in activs.list %}
+			<div class="activity">
+				<p>{{ act.activity }} ({{ act.clients.count }}/{% if act.max_people %}{{ act.max_people }}{% else %}-{% endif %})</p> 
+				<p>Instruktor: {{ act.instructor }}</p>
+				<p>{{ act.start|date:"H:i" }} - {{ act.end|date:"H:i" }}</p>
+				{% csrf_token %}
+		    		{% if user.is_authenticated and not user in act.clients.all and has_carnet %}
+				<form action="#" method="post">
+				<input type="text" name="actId" value="{{ act.id }}" hidden/>
+				<input type="submit" name="act{{ act.id }}" value="Zapisz się"/>
+				</form>
+				{% endif %}
+				{% if user.is_authenticated and user in act.clients.all %}
+				<p><i>Jesteś zapisany</i></p>
+				{% endif %}
+			</div>
+		{% empty %}
+			<p>Brak zajęć w tym dniu</p>
+		{% endfor %}
+		</div>
+	{% empty %}
+		<div class="day">
+			<h2>{{ activs.grouper }}</h2>
+			<p>Brak zajęć w ciągu 7 dni</p>
+		</div>
+	{% endfor %}
+
+</div>
+
+{% endblock %}

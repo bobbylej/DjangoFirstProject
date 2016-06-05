@@ -1,0 +1,37 @@
+table.vouchers_table .buy_voucher {
+	background: #202020;
+	border: 0;
+	border-radius: 4px;
+	padding: 5px;
+	color: #fff;
+	font-weight: bold;
+}
+
+table.vouchers_table .voucher_name {
+	text-transform: uppercase;
+}
+
+table.vouchers_table .voucher_price {
+	font-weight: bold;
+	text-align: right;
+}
+
+table.vouchers_table thead td {
+	-moz-transform: rotate(-90.0deg);  /* FF3.5+ */
+       -o-transform: rotate(-90.0deg);  /* Opera 10.5 */
+  -webkit-transform: rotate(-90.0deg);  /* Saf3.1+, Chrome */
+             filter:  progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083);  /* IE6,IE7 */
+         -ms-filter: "progid:DXImageTransform.Microsoft.BasicImage(rotation=0.083)";
+		 vertical-align: middle;
+		 text-align: center;
+		 width: 50px;
+}
+
+table.vouchers_table td.addit {
+	text-align: center;
+}
+
+table.vouchers_table td.addit img{
+	width: 20px;
+	height: 20px;
+}

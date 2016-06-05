@@ -1,0 +1,88 @@
+{% extends "polls/glowna.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/gym.css"/>
+
+<div class="gym">
+	<h1>{{ object.city }} {{ object.street }} {{ object.no_building }}{% if object.no_local %}/{{ object.no_local }}{% endif %}</h1>
+	<h2>Godziny otwarcia: {{ object.open_time|date:"H:i" }} - {{ object.close_time|date:"H:i" }} <tag id="every_day">codziennie!</p></h2>
+	<div class="photos_div">
+		<ul class="photos">
+			{% for photo in object.photos.all %}
+				<li><img src="{{ photo }}"/></li>
+			{% endfor %}
+			
+		</ul>
+		<button id="prev_img"></button>
+		<button id="next_img"></button></button>
+
+			<script>
+				$(function() {
+					scrollArrowShow();
+				});
+			
+				function scrollArrowShow() {
+					var marginL = parseInt($('ul.photos').css('margin-left').replace("px", ""));
+					var maxScroll = $('ul.photos').width() - $('div.photos_div').width();
+					//alert(marginL + " > " +maxScroll);
+					if ( 0 <= marginL) {
+						$('#prev_img').css({visibility: 'hidden'});
+					}else{
+						$('#prev_img').css({visibility: 'visible'});
+					}
+					if ( (-1)*marginL >= maxScroll) {
+						$('#next_img').css({visibility: 'hidden'});
+					}else{
+						$('#next_img').css({visibility: 'visible'});
+					}
+				}
+				
+				$('#prev_img').click(function() {
+					event.preventDefault();
+					$('ul.photos').animate({
+						marginLeft: "+=402px"
+					}, "fast", 
+					function(){
+						scrollArrowShow();
+					});
+			    });
+			    $('#next_img').click(function() {
+				  event.preventDefault();
+				  $('ul.photos').animate({
+					marginLeft: "-=402px"
+				  }, "fast", 
+					function(){
+						scrollArrowShow();
+					});
+			    });
+			</script>
+	</div>
+	
+	<div class="calendar_div">
+		<a class="calendar" href="{% url 'gym_activities' object.pk %}">Kalendarz zajęć</a>
+	</div>
+	
+	<div class="equipments">
+		<h2>Urządzenia na siłowni</h2>
+			{% for equip in object.equipments.all %}
+				{% if forloop.counter|divisibleby:2 %}
+				<div class="equip equip-right">
+					{% with equip.photos.all|first as image %}
+						<div class="equip-img"><img src="{{ image }}"/></div>
+					{% endwith %}
+					<h3 class="equip-name">{{ equip.name }}</h3>
+					<p class="equip-desc">{{ equip.desc }}</p>
+				{% else %}
+				<div class="equip equip-left">
+					<p class="equip-desc">{{ equip.desc }}</p>
+					<h3 class="equip-name">{{ equip.name }}</h3>
+					{% with equip.photos.all|first as image %}
+						<div class="equip-img"><img src="{{ image }}"/></div>
+					{% endwith %}
+				{% endif %}
+				</div>
+			{% endfor %}
+	</div>
+
+</div>
+
+{% endblock %}

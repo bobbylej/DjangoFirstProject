@@ -1,0 +1,16 @@
+{% extends "polls/glowna.html" %}
+{% block content %}
+<div class="instructors">
+	<h1>Instruktorzy</h1>
+	{% for instructor in objects %}
+		<div class="instructors">
+			<h2>{{ instructor.first_name }} {{ instructor.last_name }}</h2></a>
+			<div class="photos">
+				<img src="{{ instructor.photo }}"/>
+			</div>
+			
+		</div>
+	{% endfor %}
+
+</div>
+{% endblock %}

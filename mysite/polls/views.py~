@@ -1,0 +1,185 @@
+# _*_ coding: utf-8 _*_
+from django.http import HttpResponse
+from django.template import RequestContext, loader
+from django.http import Http404
+from django.shortcuts import get_object_or_404, render
+from django.http import HttpResponseRedirect, HttpResponse
+from django.core.urlresolvers import reverse
+from django.views import generic
+from django.contrib.auth import authenticate, login, logout
+from django.contrib import messages
+from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from datetime import datetime, timedelta
+from django.contrib.auth.hashers import make_password
+from django.template.loader import get_template
+
+from polls.models import *
+from polls.forms import *
+
+from polls.gym import *
+
+
+def main_page(request):
+    output = '''
+      <html>
+        <head><title>%s</title></head>
+        <body>
+          <h3>%s</h3>
+          <p>%s</p>
+        </body>
+      </html>
+    ''' % ('Strona startowa','Witamy :)','Wszystko działa')
+    return HttpResponse(output)
+
+'''
+def index(request):
+	latest_question_list = Question.objects.order_by('-pub_date')[:5]
+	template = loader.get_template('polls/index.html')
+	context = RequestContext(request, {
+		'latest_question_list': latest_question_list,
+	})
+	#output = ', '.join([p.question_text for p in latest_question_list])
+	return HttpResponse(template.render(context))
+
+def detail(request, question_id):
+	#try:
+	#	question = Question.objects.get(pk=question_id)
+	#except Question.DoesNotExist:
+	#	raise Http404("Question does not exist")
+	# To z góry prawie całe w jednej linijce	
+	question = get_object_or_404(Question, pk=question_id)
+	return render(request, 'polls/detail.html', {'question': question})
+
+def results(request, question_id):
+	question = get_object_or_404(Question, pk=question_id)
+    	return render(request, 'polls/results.html', {'question': question})
+'''
+'''
+class IndexView(generic.ListView):
+	template_name = 'polls/index.html'
+	context_object_name = 'latest_question_list'
+	
+	def get_queryset(self):
+		return Question.objects.order_by('-pub_date')[:5]
+
+class DetailView(generic.DetailView):
+	model = Question
+	template_name = 'polls/detail.html'
+
+class ResultsView(generic.DetailView):
+	model = Question
+	template_name = 'polls/results.html'
+
+def vote(request, question_id):
+	p = get_object_or_404(Question, pk=question_id)
+	try:
+		selected_choice = p.choice_set.get(pk=request.POST['choice'])
+	except (KeyError, Choice.DoesNotExist):
+		return render(request, 'polls/detail.html', {
+			'question': p,
+			'error_message': "You didn't select a choice.",
+		})
+	else:
+		selected_choice.votes += 1
+		selected_choice.save()
+		return HttpResponseRedirect(reverse('polls:results', args=(p.id,)))
+'''
+def login_user(request):
+	if request.method == 'POST':
+		if request.POST.get("log_in"):
+			if request.user.is_authenticated():
+				logout(request)
+			user = authenticate(username=request.POST['login_input'], password=request.POST['pass_input'])
+			if user is not None:
+		   		if user.is_active:
+					login(request, user)
+					return HttpResponseRedirect(reverse('polls:user_acc'))
+		    		else:
+					return render(request, 'polls/login.html', {
+						'error_message': "Brak użytkownika w bazie (nie aktywny)",
+					})
+			else:
+				return render(request, 'polls/login.html', {
+					'error_message': "Sprawdź login i hasło",
+				})
+		elif request.POST.get("log_out"):
+			if request.user.is_authenticated():
+				logout(request)
+				return render(request, 'polls/index.html')
+			else:
+				return render(request, 'polls/index.html')
+		elif request.POST.get("reg"):
+			return HttpResponseRedirect(reverse('polls:register'))
+		else:
+			return render(request, 'polls/login.html')
+	else:
+		return render(request, 'polls/index.html')
+	'''	
+	try:
+		question = User.objects.get(login=request.POST['login'], haslo=request.POST['pass'])
+	except User.DoesNotExist:
+		return render(request, 'polls/login.html', {
+			'question': p,
+			'error_message': "Brak użytkownika w bazie",
+		})
+	else:
+		return HttpResponseRedirect(reverse('polls:user_acc', args=(question.login)))
+	'''
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            	new_user = form.save(commit=False)
+		new_user.username=new_user.email
+		new_user.password = make_password(request.POST['password1'])
+		new_user.backend='django.contrib.auth.backends.ModelBackend'
+		new_user.save();
+		if request.user.is_authenticated():
+			logout(request)
+            	login(request, new_user)
+		return HttpResponseRedirect(reverse('polls:user_acc'))
+    else:
+        form = RegisterForm()
+    return render(request, "polls/register.html", {
+        'form': form,
+    })
+
+def user_acc(request):
+	username = None
+	if request.user.is_authenticated():
+		username = request.user.username
+    		return render(request, 'polls/user_acc.html', {'username': username})
+	else:
+		return HttpResponseRedirect(reverse('polls:login_user'))
+
+'''
+class VouchersView(generic.ListView):
+	model = Voucher
+	template_name = 'polls/vouchers.html'
+
+	def get_context_data(self, **kwargs):
+	    	context = super(VouchersView, self).get_context_data(**kwargs)
+	    	context['additions'] = Addition.objects.all()
+		context['vouchers'] = Voucher.objects.order_by('price')
+	    	# And so on for more models
+        	return context
+
+def add_voucher(request):
+	if request.method == 'POST':
+		if request.user.is_authenticated():
+			if request.POST.get("buy"):
+				voucher = Voucher.objects.get(name=request.POST['voucher_name'])
+				ClientsVoucher.objects.create(client=request.user, voucher=voucher, date_order=datetime.datetime.now().date(), date_end=(datetime.datetime.now()+timedelta(days=voucher.days)).date())
+				return HttpResponseRedirect(reverse('polls:vouchers'))
+	return HttpResponseRedirect(reverse('polls:login_user'))
+'''
+
+def index(request):
+    template = get_template("polls/index.html")
+    variables=RequestContext(request)    
+    output = template.render(variables)
+    return HttpResponse(output)
+
+

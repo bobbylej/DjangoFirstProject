@@ -1,0 +1,31 @@
+<link rel="stylesheet" type="text/css" href="css/base.css"/>
+<div class="header">
+    <div class="header_logo">
+        <img src="" alt="logo"/>
+    </div>
+    <div class="header_login_panel">
+        <form action="{% url 'polls:login_user' %}" method="post">
+        {% csrf_token %}
+        {% if user.is_authenticated %}
+            <input type="submit" name="log_out" value="Wyloguj" />
+        {% else %}
+            <label for="login_input">E-mail: </label>
+            <input type="text" name="login_input" id="login_input"/><br />
+            <label for="pass_input">Hasło: </label>
+            <input type="password" name="pass_input" id="pass_input"/><br />
+            <input type="submit" name="log_in" value="Zaloguj" />
+        {% endif %}
+        </form>
+    </div>
+    <div class="header_links">
+        <ul>
+            <li>
+                Strona główna
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="content">
+    {% block content %}
+    {% endblock %}
+</div>

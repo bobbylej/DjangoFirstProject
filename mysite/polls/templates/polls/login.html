@@ -1,0 +1,25 @@
+{% extends "polls/glowna.html" %}
+{% block content %}
+
+<div class="login_panel">
+<h1>Logowanie</h1>
+
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+<form action="{% url 'login_user' %}" method="post">
+{% csrf_token %}
+{% if user.is_authenticated %}
+	<input type="submit" name="log_out" value="Wyloguj" />
+{% else %}
+    	<label for="login_input">E-mail: </label>
+	<input type="text" name="login_input" id="login_input"/><br />
+	<label for="pass_input">Hasło: </label>
+    	<input type="password" name="pass_input" id="pass_input"/><br />
+	<input type="submit" name="log_in" value="Zaloguj" />
+{% endif %}
+</form>
+
+
+</div>
+
+{% endblock %}

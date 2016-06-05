@@ -1,0 +1,45 @@
+{% extends "polls/glowna.html" %}
+{% block content %}
+<link rel="stylesheet" type="text/css" href="/static/css/gyms.css"/>
+
+<div class="gyms">
+	<h1>Siłownie</h1>
+	{% for gym in objects %}
+		<div class="gym">
+			<a href="{% url 'gym' gym.pk %}"><h1>{{ gym.city }} {{ gym.street }} {{ gym.no_building }}{% if gym.no_local %}/{{ gym.no_local }}{% endif %}</h1></a>
+			<div class="photos">
+			{% for photo in gym.photos.all %}
+				<img src="{{ photo }}"/>
+			{% endfor %}
+			</div>
+			<div class="equipments">
+				<h2>Urządzenia na siłowni</h2>
+			{% for equip in gym.equipments.all %}
+				{% if forloop.counter|divisibleby:2 %}
+				<div class="equip equip-right">
+					{% with equip.photos.all|first as image %}
+						<div class="equip-img"><img src="{{ image }}"/></div>
+					{% endwith %}
+					<h3 class="equip-name">{{ equip.name }}</h3>
+					<p class="equip-desc">{{ equip.desc }}</p>
+				{% else %}
+				<div class="equip equip-left">
+					<p class="equip-desc">{{ equip.desc }}</p>
+					<h3 class="equip-name">{{ equip.name }}</h3>
+					{% with equip.photos.all|first as image %}
+						<div class="equip-img"><img src="{{ image }}"/></div>
+					{% endwith %}
+				{% endif %}
+				</div>
+			{% endfor %}
+			</div>
+		</div>
+	{% empty %}
+		<div class="empty">
+			<p>Brak siłowni</p>
+		</div>
+	{% endfor %}
+
+</div>
+
+{% endblock %}

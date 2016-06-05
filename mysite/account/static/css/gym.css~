@@ -1,0 +1,28 @@
+div.day {
+	width: 100%;
+	border: 1px solid #202020;
+	padding: 10px;
+	display: inline-block;
+}
+
+div.day div.activity {
+	display: inline-block;
+	width: 20%;
+	font-size: 11px;
+}
+
+div.day div.activity p {
+	margin: 5px;
+}
+
+div.equipment {
+	margin-bottom: 10px;
+}
+
+div.photos img {
+	width: 400px;
+}
+
+div.equipment div.equip-photos img {
+	width: 200px;
+}
